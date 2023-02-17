@@ -1,0 +1,18 @@
+Surname: 321
+Firstname: wqe
+patronymic: ewr
+dateOfBirth: 13
+address: afdaf
+phoneNum: 132123213
+faculty: 2
+course: 1
+
+Surname: dsfa
+Firstname: dsf
+patronymic: ewdsf
+dateOfBirth: 234
+address: adkowk
+phoneNum: 21093123
+faculty: 2
+course: 1
+
