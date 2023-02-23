@@ -21,6 +21,8 @@ int16_t EnterSettings();
 date GetDayMonthYear(const string& str);
 
 int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic);
+int16_t CorrectFaculty(const string& surname, const string& firstname, const string& patronymic);
+int16_t CorrectCourse(const string& surname, const string& firstname, const string& patronymic);
 
 template <typename type = student> myVector<type> InputFromFile() {
     string surname;
@@ -115,7 +117,7 @@ template <typename type = student> myVector<type> InputFromFile() {
 
     return s;
 }
-/*
+
 template <typename type = student> myVector<type>InputFromConsole() {
     string surname;
     string firstname;
@@ -154,4 +156,3 @@ template <typename type = student> myVector<type>InputFromConsole() {
 
     }
 }
-*/

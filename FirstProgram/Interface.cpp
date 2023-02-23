@@ -80,3 +80,20 @@ int16_t CorrectCourse(const string& surname, const string& firstname, const stri
     return course;
 }
 
+date CorrectDateOfBirth(const string& surname, const string& firstname, const string& patronymic) {
+    date dateOfBirth;
+    string dateOfBirth_;
+    while (!dateOfBirth.DateCorrect()) {
+        cout << "Field \"dateOfBirth\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        if (EnterSettings() == 1) {
+            cout << "Date of birth: ";
+            cin >> dateOfBirth_;
+            dateOfBirth = GetDayMonthYear(dateOfBirth_);
+        }
+        else {
+            return dateOfBirth;
+        }
+    }
+    return dateOfBirth;
+}
