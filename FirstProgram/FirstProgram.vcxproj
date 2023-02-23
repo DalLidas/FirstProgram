@@ -132,9 +132,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Algorithms.cpp" />
+    <ClCompile Include="Classes.cpp" />
+    <ClCompile Include="Interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Input.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Algorithms.h" />
+    <ClInclude Include="Classes.h" />
+    <ClInclude Include="Interface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
