@@ -7,6 +7,7 @@
 #define numberOfCourse 5 + 1 
 #define smallestPhoneNumber   9999999999
 #define bigestPhoneNumber   100000000000
+#define maximumOfStudents 10000  //2147483647 максимальное значение, так как это максимум int
 
 enum inputFields {
     surnameField, firstnameField, patronymicField, dateOfBirthField,
@@ -18,6 +19,8 @@ using namespace std;
 int16_t EnterSettings();
 
 date GetDayMonthYear(const string& str);
+
+int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic);
 
 template <typename type = student> myVector<type> InputFromFile() {
     string surname;
@@ -76,62 +79,20 @@ template <typename type = student> myVector<type> InputFromFile() {
                     break;
                 case(phoneNumField):
                     inputStream >> phoneNum;
-                    while (true) {
-                        if (IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
-                            break;
-                        }
-                        else {
-                            cout << "Field \"phoneNum\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-                                << "You can enter now correct (press 1) or do not initialize it (press 2)";
-                            if (EnterSettings() == 1) {
-                                cout << "Phone number: ";
-                                cin >> phoneNum;
-                            }
-                            else {
-                                phoneNum = 0;
-                                break;
-                            }
-                        }
+                    if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+                        phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
                     }
                     break;
                 case(facultyField):
                     inputStream >> faculty;
-                    while (true) {
-                        if (IsInBetween<int16_t>(faculty, 0, numberOfFaculty)) {
-                            break;
-                        }
-                        else {
-                            cout << "Field \"faculty\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-                                << "You can enter now correct (press 1) or do not initialize it (press 2)";
-                            if (EnterSettings() == 1) {
-                                cout << "Faculty: ";
-                                cin >> faculty;
-                            }
-                            else {
-                                faculty = 0;
-                                break;
-                            }
-                        }
+                    if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+                        faculty = CorrectFaculty(surname, firstname, patronymic);
                     }
                     break;
                 case(courseField):
                     inputStream >> course;
-                    while (true) {
-                        if (IsInBetween<int16_t>(course, 0, numberOfCourse)) {
-                            break;
-                        }
-                        else {
-                            cout << "Field \"course\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-                                << "You can enter now correct (press 1) or do not initialize it (press 2)";
-                            if (EnterSettings() == 1) {
-                                cout << "Course: ";
-                                cin >> course;
-                            }
-                            else {
-                                course = 0;
-                                break;
-                            }
-                        }
+                    if (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+                        course = CorrectCourse(surname, firstname, patronymic);
                     }
                     break;
                 }
@@ -154,5 +115,43 @@ template <typename type = student> myVector<type> InputFromFile() {
 
     return s;
 }
+/*
+template <typename type = student> myVector<type>InputFromConsole() {
+    string surname;
+    string firstname;
+    string patronymic;
+    string dateOfBirth_;
+    date dateOfBirth;
+    string address;
+    int64_t phoneNum;
+    int16_t faculty;
+    int16_t course;
 
- 
+    int numberOfStudents = 0;
+
+   
+    while (true) {
+        cout << "Enter number of students: ";
+        cin >> numberOfStudents;
+        if (IsInBetween<int>(numberOfStudents, 0, maximumOfStudents)) {
+            break;
+        }
+        cout << "Invalide value. Try again" << endl;
+    }
+    
+    for (int i = 0; i < numberOfStudents; ++i) {
+        cout << endl << "Surname: ";
+        cin >> surname;
+        cout << endl << "Firstname: ";
+        cin >> firstname;
+        cout << endl << "Patronymic: ";
+        cin >> patronymic;
+        while (true) {
+            cout << endl << "Date of birth: ";
+            cin >> dateOfBirth_;
+        }
+
+
+    }
+}
+*/

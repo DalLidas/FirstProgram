@@ -31,3 +31,52 @@ date GetDayMonthYear(const string& str) {
     }
     return date();
 }
+
+int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic) {
+    int64_t phoneNum = 0;
+    while (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+        cout << "Field \"phoneNum\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        if (EnterSettings() == 1) {
+            cout << "Phone number: ";
+            cin >> phoneNum;
+        }
+        else {
+            return 0;
+        }
+    }
+    return phoneNum;
+}
+
+int16_t CorrectFaculty(const string& surname, const string& firstname, const string& patronymic){
+    int16_t faculty = 0;
+    while (!IsInBetween<int16_t>(faculty, 0, numberOfFaculty)) {
+        cout << "Field \"faculty\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        if (EnterSettings() == 1) {
+            cout << "Faculty: ";
+            cin >> faculty;
+        }
+        else {
+            return 0;
+        }
+    }
+    return faculty;
+}
+
+int16_t CorrectCourse(const string& surname, const string& firstname, const string& patronymic) {
+    int16_t course = 0;
+    while (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+        cout << "Field \"course\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        if (EnterSettings() == 1) {
+            cout << "Faculty: ";
+            cin >> course;
+        }
+        else {
+            return 0;
+        }
+    }
+    return course;
+}
+
