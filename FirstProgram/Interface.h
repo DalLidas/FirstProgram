@@ -20,6 +20,7 @@ int16_t EnterSettings();
 
 date GetDayMonthYear(const string& str);
 
+date CorrectDateOfBirth(const string& surname, const string& firstname, const string& patronymic);
 int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic);
 int16_t CorrectFaculty(const string& surname, const string& firstname, const string& patronymic);
 int16_t CorrectCourse(const string& surname, const string& firstname, const string& patronymic);
@@ -63,17 +64,8 @@ template <typename type = student> myVector<type> InputFromFile() {
                 case(dateOfBirthField):
                     inputStream >> dateOfBirth_;
                     dateOfBirth = GetDayMonthYear(dateOfBirth_);
-                    while(!dateOfBirth.DateCorrect()) {
-                        cout << "Field \"dateOfBirth\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-                            << "You can enter now correct (press 1) or do not initialize it (press 2)";
-                        if (EnterSettings() == 1) {
-                            cout << "Date of birth: ";
-                            cin >> dateOfBirth_;
-                            dateOfBirth = GetDayMonthYear(dateOfBirth_);
-                        }
-                        else {
-                            break;
-                        }
+                    if(!dateOfBirth.DateCorrect()) {
+                        dateOfBirth = CorrectDateOfBirth(surname, firstname, patronymic);
                     }
                     break;
                 case(addressField):
@@ -87,7 +79,7 @@ template <typename type = student> myVector<type> InputFromFile() {
                     break;
                 case(facultyField):
                     inputStream >> faculty;
-                    if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+                    if (!IsInBetween<int64_t>(faculty, 0, numberOfFaculty)) {
                         faculty = CorrectFaculty(surname, firstname, patronymic);
                     }
                     break;
@@ -115,6 +107,12 @@ template <typename type = student> myVector<type> InputFromFile() {
         }
     }
 
+    cout << "#1.1" << endl;
+    s.Info();
+    for (int i = 0; i < s.GetSize(); ++i) {
+        s[i].Show();
+    }
+
     return s;
 }
 
@@ -130,7 +128,7 @@ template <typename type = student> myVector<type>InputFromConsole() {
     int16_t course;
 
     int numberOfStudents = 0;
-
+    myVector <student> s;
    
     while (true) {
         cout << "Enter number of students: ";
@@ -144,15 +142,51 @@ template <typename type = student> myVector<type>InputFromConsole() {
     for (int i = 0; i < numberOfStudents; ++i) {
         cout << endl << "Surname: ";
         cin >> surname;
-        cout << endl << "Firstname: ";
+
+        cout << "Firstname: ";
         cin >> firstname;
-        cout << endl << "Patronymic: ";
+
+        cout << "Patronymic: ";
         cin >> patronymic;
-        while (true) {
-            cout << endl << "Date of birth: ";
-            cin >> dateOfBirth_;
+        
+        cout << "Date of birth: ";
+        cin >> dateOfBirth_;
+        dateOfBirth = GetDayMonthYear(dateOfBirth_);
+        if (!dateOfBirth.DateCorrect()) {
+            dateOfBirth = CorrectDateOfBirth(surname, firstname, patronymic);
         }
 
+        cout << "Address: ";
+        cin >> address;
 
+        cout << "Phone number: ";
+        cin >> phoneNum;
+        if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+            phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
+        }
+
+        cout << "Faculty: ";
+        cin >> faculty;
+        if (!IsInBetween<int64_t>(faculty, 0, numberOfFaculty)) {
+            faculty = CorrectFaculty(surname, firstname, patronymic);
+        }
+
+        cout << "Course: ";
+        cin >> course;
+        if (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+            course = CorrectCourse(surname, firstname, patronymic);
+        }
+
+        student s_;
+        s_.Set(surname, firstname, patronymic, dateOfBirth, address, phoneNum, faculty, course);
+        s.Append(s_);
     }
+
+    cout << "#1.2" << endl;
+    s.Info();
+    for (int i = 0; i < s.GetSize(); ++i) {
+        s[i].Show();
+    }
+
+    return s;
 }

@@ -18,31 +18,53 @@ int main() {
     int16_t inputSetting = 0;
     int16_t actionSetting = 0;
 
+    //conteiner with students
+    myVector<student> s;
+
     cout << "3.1 Task by Mukhametov D.I. 423 group option 1" << endl << endl
          << "Create class student included fields ( surname, first name, patronymic," << endl
          << "date of birth, address, phone, faculty, course.Create an array of objects." << endl << endl
          << "To realize the possibility of obtaining :" << endl
-         << "– a list of students of a given faculty," << endl
-         << "– lists of students for each facultyand course," << endl
-         << "– a list of students born after a given year." << endl << endl ;
+         << "- a list of students of a given faculty," << endl
+         << "- lists of students for each facultyand course," << endl
+         << "- a list of students born after a given year." << endl << endl ;
 
 
     while (true) {
         
-        cout << "How do you want to input information about student (file \"1\" or console\"2\"): ";
+        cout << "How do you want to input information about student (file \"1\" or console \"2\"): ";
         inputSetting = EnterSettings();
 
         //input
         if (inputSetting == inputFromFile) { 
-            myVector<student> s = InputFromFile();
+            //myVector<student> s;
+            s = InputFromFile();
+            cout << "#2.1" << endl;
+            s.Info();
+            for (int i = 0; i < s.GetSize(); ++i) {
+                s[i].Show();
+            }
         }
         else if (inputSetting == inputFromConsole) { //for console input
-            //myVector<student> s = InputFromConsole();
+            //myVector<student> s;
+            s = InputFromConsole();
+            cout << "#2.2" << endl;
+            s.Info();
+            for (int i = 0; i < s.GetSize(); ++i) {
+                s[i].Show();
+            }
         }
         else {
             continue;
         }
         
+        cout << "#3" << endl;
+        s.Info();
+        for (int i = 0; i < s.GetSize(); ++i) {
+            s[i].Show();
+        }
+
+        /*
         cout << "\nWhat do you want to do:" << endl
             << "1.Sort student by faculty" << endl
             << "2.Show " << endl
@@ -63,7 +85,7 @@ int main() {
         else {
             continue;
         }
-
+        */
         return 0;
     }
 }

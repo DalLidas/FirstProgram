@@ -71,7 +71,7 @@ public:
 
     ~myVector() {
         curentSize = capacity = 0;
-        if (ptr == nullptr) {
+        if (!(ptr == nullptr)) {
             delete[] ptr;
         }
     }
@@ -95,5 +95,19 @@ public:
 
     type& operator [](int index) {
         return ptr[index];
+    }
+
+    type& operator = ( type const& other) {
+        if (this != &other) {
+            curentSize = other.curentSize;
+            capacity = other.capacity;
+
+            ptr = new type[capacity];
+            for (int i = 0; i < other.curentSize; ++i) {
+                ptr[i] = other.ptr[i];
+            }
+        }
+
+        return this;
     }
 };

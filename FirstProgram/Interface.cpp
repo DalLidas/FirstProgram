@@ -21,13 +21,15 @@ int16_t EnterSettings() {
 
 date GetDayMonthYear(const string& str) {
     cmatch result;
-    static const regex regular( "([0-9]{1,2})" //day
-                                "([\\s-_\./])"
-                                "([0-9]{2})"   //month
-                                "([\\s-_\./])"
-                                "([0-9]{4})"); //year
+    const regex regular( "([0-9]{1,2})" //day
+                        "([\\s-_\./])"
+                        "([0-9]{2})"   //month
+                        "([\\s-_\./])"
+                        "([0-9]{4})"); //year
     if (regex_match(str.c_str(),result, regular)) {
-        return date(stoi(result[1]), stoi(result[3]), stoi(result[5]));
+        return date(static_cast<int16_t>(stoi(result[1])), 
+                    static_cast<int16_t>(stoi(result[3])),
+                    static_cast<int16_t>(stoi(result[5])));
     }
     return date();
 }

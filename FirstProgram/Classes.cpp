@@ -1,8 +1,8 @@
 #include "Classes.h"
 
 bool date::Leap(int y) const {
-        return ((y % 4 == 0 && y % 100 != 0) || y % 400);
-    }
+    return ((y % 4 == 0 && y % 100 != 0) || y % 400);
+}
 
 bool date::DateCorrect(const int16_t& day_, const int16_t& month_, const int16_t& year_) {
     int days[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
