@@ -44,21 +44,23 @@ public:
     void Show() const;
 };
 
+
 template <typename type = int> class myVector {
 private:
     type* ptr = nullptr;
-    int curentSize = 0;
+    int currentSize = 0;
     int capacity = 0;
 
     void Reallocation() {
-        type* buffer = new type[curentSize];
-        for (size_t i = 0; i < curentSize; ++i) {
+        type* buffer = new type[currentSize];
+        for (size_t i = 0; i < currentSize; ++i) {
             buffer[i] = ptr[i];
         }
         capacity *= 2;
 
+        delete ptr;
         ptr = new type[capacity];
-        for (int i = 0; i < curentSize; ++i) {
+        for (int i = 0; i < currentSize; ++i) {
             ptr[i] = buffer[i];
         }
 
@@ -66,48 +68,56 @@ private:
         buffer = nullptr;
     }
 public:
-    myVector() : curentSize(0), capacity(1), ptr(new type) {}
-    myVector(const int& size) : curentSize(size), capacity(size), ptr(new type[size]) {}
+    myVector() : currentSize(0), capacity(1), ptr(new type) {}
+    myVector(const int& size) : currentSize(size), capacity(size), ptr(new type[size]) {}
 
     ~myVector() {
-        curentSize = capacity = 0;
-        if (!(ptr == nullptr)) {
-            delete[] ptr;
+        if (ptr != nullptr) {
+            if (capacity == 1) {
+                currentSize = capacity = 0;
+                delete ptr;
+            }
+            else {
+                currentSize = capacity = 0;
+                delete[] ptr;
+            }
         }
     }
     void Append(type object) {
-        if (curentSize == capacity) {
+        if (currentSize == capacity) {
             Reallocation();
         }
 
-        ptr[curentSize++] = object;
+        ptr[currentSize++] = object;
     }
 
     int GetSize() const {
-        return curentSize;
+        return currentSize;
     }
 
     void Info() const {
         cout << "ptr: " << ptr << endl
-            << "curent size: " << curentSize << endl
+            << "curent size: " << currentSize << endl
             << "capacity: " << capacity << endl;
     }
 
     type& operator [](int index) {
         return ptr[index];
     }
+    const type& operator [](int index) const {
+        return ptr[index];
+    }
 
-    type& operator = ( type const& other) {
+    myVector<type>& operator = (const myVector<type>& other) {
         if (this != &other) {
-            curentSize = other.curentSize;
+            currentSize = other.currentSize;
             capacity = other.capacity;
-
+            delete ptr;
             ptr = new type[capacity];
-            for (int i = 0; i < other.curentSize; ++i) {
-                ptr[i] = other.ptr[i];
+            for (int i = 0; i < currentSize; ++i) {
+                ptr[i] = other[i];
             }
         }
-
-        return this;
+        return *this;
     }
 };

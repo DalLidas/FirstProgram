@@ -37,7 +37,6 @@ int main() {
 
         //input
         if (inputSetting == inputFromFile) { 
-            //myVector<student> s;
             s = InputFromFile();
             cout << "#2.1" << endl;
             s.Info();
@@ -46,7 +45,6 @@ int main() {
             }
         }
         else if (inputSetting == inputFromConsole) { //for console input
-            //myVector<student> s;
             s = InputFromConsole();
             cout << "#2.2" << endl;
             s.Info();
@@ -86,6 +84,6 @@ int main() {
             continue;
         }
         */
-        return 0;
+        //return 0;
     }
 }

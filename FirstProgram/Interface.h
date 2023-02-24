@@ -116,7 +116,7 @@ template <typename type = student> myVector<type> InputFromFile() {
     return s;
 }
 
-template <typename type = student> myVector<type>InputFromConsole() {
+template <typename type = student> myVector<type> InputFromConsole() {
     string surname;
     string firstname;
     string patronymic;
