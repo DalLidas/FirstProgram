@@ -18,22 +18,21 @@ int main() {
     int16_t inputSetting = 0;
     int16_t actionSetting = 0;
 
-    //conteiner with students
-    myVector<student> s;
-
     cout << "3.1 Task by Mukhametov D.I. 423 group option 1" << endl << endl
          << "Create class student included fields ( surname, first name, patronymic," << endl
          << "date of birth, address, phone, faculty, course.Create an array of objects." << endl << endl
          << "To realize the possibility of obtaining :" << endl
          << "- a list of students of a given faculty," << endl
-         << "- lists of students for each facultyand course," << endl
+         << "- lists of students for each faculty and course," << endl
          << "- a list of students born after a given year." << endl << endl ;
 
 
     while (true) {
-        
         cout << "How do you want to input information about student (file \"1\" or console \"2\"): ";
         inputSetting = EnterSettings();
+
+        //container with students
+        myVector<student> s;
 
         //input
         if (inputSetting == inputFromFile) { 

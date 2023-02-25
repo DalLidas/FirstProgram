@@ -58,9 +58,9 @@ private:
         }
         capacity *= 2;
 
-        delete ptr;
+        delete[] ptr;
         ptr = new type[capacity];
-        for (int i = 0; i < currentSize; ++i) {
+        for (size_t i = 0; i < currentSize; ++i) {
             ptr[i] = buffer[i];
         }
 
@@ -68,19 +68,14 @@ private:
         buffer = nullptr;
     }
 public:
-    myVector() : currentSize(0), capacity(1), ptr(new type) {}
-    myVector(const int& size) : currentSize(size), capacity(size), ptr(new type[size]) {}
+    myVector() : currentSize(0), capacity(2), ptr(new type[2]) {}
+    myVector(const int& size) : currentSize(size), capacity(size > 1 ? size : 2 ), ptr(new type[size > 1 ? size : 2]) {}
 
     ~myVector() {
         if (ptr != nullptr) {
-            if (capacity == 1) {
-                currentSize = capacity = 0;
-                delete ptr;
-            }
-            else {
-                currentSize = capacity = 0;
-                delete[] ptr;
-            }
+            delete[] ptr;
+            ptr = nullptr;
+            capacity = currentSize = 0;
         }
     }
     void Append(type object) {
@@ -97,8 +92,14 @@ public:
 
     void Info() const {
         cout << "ptr: " << ptr << endl
-            << "curent size: " << currentSize << endl
+            << "current size: " << currentSize << endl
             << "capacity: " << capacity << endl;
+    }
+
+    void ClearVector() {
+        delete[] ptr;
+        ptr = nullptr;
+        capacity = currentSize = 0;
     }
 
     type& operator [](int index) {
@@ -110,11 +111,11 @@ public:
 
     myVector<type>& operator = (const myVector<type>& other) {
         if (this != &other) {
+            ClearVector();
             currentSize = other.currentSize;
             capacity = other.capacity;
-            delete ptr;
             ptr = new type[capacity];
-            for (int i = 0; i < currentSize; ++i) {
+            for (size_t i = 0; i < currentSize; ++i) {
                 ptr[i] = other[i];
             }
         }
