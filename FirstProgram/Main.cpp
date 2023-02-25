@@ -17,10 +17,10 @@ using std::cin;
 
 int main() {
     //settings
-    int16_t inputSetting = 0;
-    int16_t actionSetting = 0;
-    int16_t outputSetting = 0;
-    int16_t endSetting = 0;
+    int inputSetting = 0;
+    int actionSetting = 0;
+    int outputSetting = 0;
+    int exitSetting = 0;
 
     //flag
     bool flagOldStudents = false;
@@ -38,20 +38,15 @@ int main() {
          << "- a list of students born after a given year." << endl << endl ;
 
     while (true) {
-        cout << "How do you want to input information about student (file \"1\" or console \"2\"): ";
-        inputSetting = EnterSettings();
-
         //input
-        if (flagOldStudents != true) {
-            if (inputSetting == inputFromFile) { //for file input
-                studentsInput = InputFromFile();
-            }
-            else if (inputSetting == inputFromConsole) { //for console input
-                studentsInput = InputFromConsole();
-            }
-            else {
-                cout << "Unexpected behavior" << endl;
-                continue;
+        if (!flagOldStudents) {
+            cout << "How do you want to input information about student (file \"1\" or console \"2\"): ";
+            inputSetting = EnterSettingsTwo();
+
+            switch (inputSetting) {
+            case(inputFromFile): studentsInput = InputFromFile(); break;        //for file input
+            case(inputFromConsole): studentsInput = InputFromConsole(); break;  //for console input                                
+            default: cout << "Unexpected behavior" << endl; continue;
             }
         }
 
@@ -60,21 +55,14 @@ int main() {
             << "1.Sort student by faculty" << endl
             << "2.Sort by faculty & course" << endl
             << "3.Sort student by year of birth" << endl;
-        cin >> actionSetting;
+        actionSetting = EnterSettingThree();
 
         //action
-        if (actionSetting == sortByFaculty) { //Sort by faculty
-            studentsOutput = SortByFaculty(studentsInput);
-        }
-        else if (actionSetting == sortByFacultyCourse) { //Sort by faculty & course
-            studentsOutput = SortByFacultyCourse(studentsInput);
-        }
-        else if (actionSetting == sortByYearOfBirth) { //Sort by year of birth
-            studentsOutput = SortByYearOfBirth(studentsInput);
-        }
-        else {
-            cout << "Unexpected behavior" << endl;
-            continue;
+        switch (actionSetting){
+        case(sortByFaculty): studentsOutput = SortByFaculty(studentsInput); break;              //sorting by faculty
+        case(sortByFacultyCourse): studentsOutput = SortByFacultyCourse(studentsInput); break;  //sorting by faculty & course
+        case(sortByYearOfBirth): studentsOutput = SortByYearOfBirth(studentsInput); break;      //sorting student by year of birth
+        default: cout << "Unexpected behavior" << endl; continue;
         }
 
         //output
@@ -84,18 +72,13 @@ int main() {
 
         cout << endl;
         cout << "Do you want to write result of sorting (Yes \"1\" or No \"2\"): ";
-        outputSetting = EnterSettings();
+        outputSetting = EnterSettingsTwo();
 
         //save result (studentOutput)
-        if (outputSetting == 1) { //Sort by faculty
-            WriteOutput(studentsOutput);
-        }
-        else if (actionSetting == 2) { //Sort by faculty & course
-            //nothing :)
-        }
-        else {
-            cout << "Unexpected behavior" << endl;
-            continue;
+        switch (outputSetting) {
+        case(oldStudent): WriteOutput(studentsOutput); break;      //write to file
+        case(newStudent): break;                                   //nothing :)
+        default: cout << "Unexpected behavior" << endl; continue;
         }
         
         cout << endl;
@@ -103,23 +86,14 @@ int main() {
             << "1.Sort again current students" << endl
             << "2.Enter new student" << endl
             << "3.Close program " << endl;
-        outputSetting = EnterSettings();
+        exitSetting = EnterSettingThree();
 
         //ending
-        if (outputSetting == oldStudent) { //Sort by faculty
-            flagOldStudents = true;
+        switch (exitSetting) {
+        case(oldStudent): flagOldStudents = true; break;                                //Sort by faculty
+        case(newStudent): flagOldStudents = false; studentsInput.ClearVector();; break; //Sort by faculty & course
+        case(closeProgram): return 0;                                                   //closeProgram
+        default: cout << "Unexpected behavior" << endl; continue;
         }
-        else if (actionSetting == newStudent) { //Sort by faculty & course
-            flagOldStudents = false;
-            studentsInput.ClearVector();
-        }
-        else if (actionSetting == closeProgram) { //closeProgram
-            break;
-        }
-        else {
-            cout << "Unexpected behavior" << endl;
-            continue;
-        }
-    }
-    return 0;
+    } 
 }

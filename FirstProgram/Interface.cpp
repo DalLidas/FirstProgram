@@ -5,29 +5,51 @@
 //#define smallestPhoneNumber   9999999999
 //#define biggestPhoneNumber   100000000000
 
-int16_t EnterSettingsTwo() {
-    int16_t setting = 0;
+int EnterSettingsTwo() {
+    int  setting = 0;
+    cin >> setting;
 
     while (true) {
-        cin >> setting;
         if (setting == 1 || setting == 2) {
             break;
         }
-        cout << "Invalid input. Try again" << endl;
+
+        while (!(cin >> setting))
+        {
+            if (cin.eof())
+            {
+                throw "eof";
+            }
+            cin.clear();
+            cin.ignore(1000, '\n'); 
+            cout << "Invalid input. Try again" << endl
+                << "Enter \"1\" or \"2\": ";
+        }
     }
 
     return setting;
 }
 
-int16_t EnterSettingThree() {
-    int16_t setting = 0;
+int EnterSettingThree() {
+    int setting = 0;
+    cin >> setting;
 
     while (true) {
-        cin >> setting;
         if (setting == 1 || setting == 2 || setting == 3) {
             break;
         }
-        cout << "Invalid input. Try again" << endl;
+
+        while (!(cin >> setting))
+        {
+            if (cin.eof())
+            {
+                throw "eof";
+            }
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input. Try again" << endl
+                << "Enter \"1\" or \"2\" or \"3\": ";
+        }
     }
 
     return setting;
@@ -53,7 +75,7 @@ int64_t CorrectPhoneNum(const string& surname, const string& firstname, const st
     while (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
         cout << "Field \"phoneNum\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
             << "You can enter now correct (press 1) or do not initialize it (press 2)";
-        if (EnterSettings() == 1) {
+        if (EnterSettingsTwo() == 1) {
             cout << "Phone number: ";
             cin >> phoneNum;
         }
@@ -69,7 +91,7 @@ int16_t CorrectFaculty(const string& surname, const string& firstname, const str
     while (!IsInBetween<int16_t>(faculty, 0, numberOfFaculty)) {
         cout << "Field \"faculty\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
             << "You can enter now correct (press 1) or do not initialize it (press 2)";
-        if (EnterSettings() == 1) {
+        if (EnterSettingsTwo() == 1) {
             cout << "Faculty: ";
             cin >> faculty;
         }
@@ -85,7 +107,7 @@ int16_t CorrectCourse(const string& surname, const string& firstname, const stri
     while (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
         cout << "Field \"course\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
             << "You can enter now correct (press 1) or do not initialize it (press 2)";
-        if (EnterSettings() == 1) {
+        if (EnterSettingsTwo() == 1) {
             cout << "Faculty: ";
             cin >> course;
         }
@@ -102,7 +124,7 @@ date CorrectDateOfBirth(const string& surname, const string& firstname, const st
     while (!dateOfBirth.DateCorrect()) {
         cout << "Field \"dateOfBirth\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
             << "You can enter now correct (press 1) or do not initialize it (press 2)";
-        if (EnterSettings() == 1) {
+        if (EnterSettingsTwo() == 1) {
             cout << "Date of birth: ";
             cin >> dateOfBirth_;
             dateOfBirth = GetDayMonthYear(dateOfBirth_);

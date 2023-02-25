@@ -16,7 +16,8 @@ enum inputFields {
 
 using namespace std;
 
-int16_t EnterSettings();
+int EnterSettingsTwo();
+int EnterSettingThree();
 
 date GetDayMonthYear(const string& str);
 
@@ -133,7 +134,7 @@ template <typename type = student> myVector<type> InputFromConsole() {
         cout << "Invalid value. Try again" << endl;
     }
     
-    for (int i = 0; i < numberOfStudents; ++i) {
+    for (size_t i = 0; i < numberOfStudents; ++i) {
         cout << endl << "Surname: ";
         cin >> surname;
 
