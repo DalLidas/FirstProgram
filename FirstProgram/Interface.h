@@ -238,3 +238,22 @@ template <typename type = student> myVector<type> SortByYearOfBirth(const myVect
 
     return output;
 }
+
+template <typename type = student> void WriteOutput(const myVector<type>& input) {
+    while (true) {
+        cout << "Enter file path: ";
+        string filePath = " ";
+        cin >> filePath;
+        ofstream outputStream(filePath);
+        if (!outputStream.is_open()) {
+            cout << "Invalid file path. Try again" << endl;
+            continue;
+        }
+        else {
+            for (size_t i = 0; i < input.GetSize(); ++i) {
+                outputStream << input[i].Get() << endl;
+            }
+            break;
+        }
+    }
+}

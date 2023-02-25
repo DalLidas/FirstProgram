@@ -98,7 +98,7 @@ string student::Get() const {
         + "Address: " + address + "\n"
         + "PhoneNum: " + to_string(phoneNum) + "\n"
         + "Faculty: " + to_string(faculty) + "\n"
-        + "Course: " + to_string(course) + "\n\n";
+        + "Course: " + to_string(course) + "\n";
 }
 
 int16_t student::GetFaculty() const {

@@ -5,12 +5,26 @@
 //#define smallestPhoneNumber   9999999999
 //#define biggestPhoneNumber   100000000000
 
-int16_t EnterSettings() {
+int16_t EnterSettingsTwo() {
     int16_t setting = 0;
 
     while (true) {
         cin >> setting;
         if (setting == 1 || setting == 2) {
+            break;
+        }
+        cout << "Invalid input. Try again" << endl;
+    }
+
+    return setting;
+}
+
+int16_t EnterSettingThree() {
+    int16_t setting = 0;
+
+    while (true) {
+        cin >> setting;
+        if (setting == 1 || setting == 2 || setting == 3) {
             break;
         }
         cout << "Invalid input. Try again" << endl;
