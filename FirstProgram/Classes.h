@@ -20,6 +20,11 @@ public:
     date(const int16_t& day_, const int16_t& month_, const int16_t& year_);
     void Set(const int16_t& day_, const int16_t& month_, const int16_t& year_);
     string Get() const;
+
+    int16_t GetDay() const;   //for sort
+    int16_t GetMonth() const; //for sort
+    int16_t GetYear() const;  //for sort
+
     bool DateCorrect() const;
     void Show() const;
 };
@@ -41,6 +46,11 @@ public:
     void Set(const string& surname_, const string& firstname_, const string& patronymic_, const date& dateOfBirth_,
         const string& address_, const int64_t& phoneNum_, const int16_t& faculty_, const int16_t& course_);
     string Get() const;
+
+    int16_t GetFaculty() const; //for sort
+    int16_t GetCourse() const;  //for sort
+    date GetDate() const;       //for sort
+
     void Show() const;
 };
 
@@ -48,8 +58,8 @@ public:
 template <typename type = int> class myVector {
 private:
     type* ptr = nullptr;
-    int currentSize = 0;
-    int capacity = 0;
+    size_t currentSize = 0;
+    size_t capacity = 0;
 
     void Reallocation() {
         type* buffer = new type[currentSize];
@@ -69,7 +79,7 @@ private:
     }
 public:
     myVector() : currentSize(0), capacity(2), ptr(new type[2]) {}
-    myVector(const int& size) : currentSize(size), capacity(size > 1 ? size : 2 ), ptr(new type[size > 1 ? size : 2]) {}
+    myVector(const size_t& size) : currentSize(size), capacity(size > 1 ? size : 2 ), ptr(new type[size > 1 ? size : 2]) {}
 
     ~myVector() {
         if (ptr != nullptr) {
@@ -102,10 +112,10 @@ public:
         capacity = currentSize = 0;
     }
 
-    type& operator [](int index) {
+    type& operator [](size_t index) {
         return ptr[index];
     }
-    const type& operator [](int index) const {
+    const type& operator [](size_t index) const {
         return ptr[index];
     }
 

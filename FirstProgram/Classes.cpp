@@ -1,5 +1,8 @@
 #include "Classes.h"
 
+/////////////////////////////////////////////////
+//                    Date                     //
+/////////////////////////////////////////////////
 bool date::Leap(int y) const {
     return ((y % 4 == 0 && y % 100 != 0) || y % 400);
 }
@@ -41,6 +44,18 @@ string date::Get() const {
     return to_string(day) + "/" + to_string(month) + "/" + to_string(year);
 }
 
+int16_t date::GetDay() const {
+    return day;
+}
+
+int16_t date::GetMonth() const {
+    return month;
+}
+
+int16_t date::GetYear() const {
+    return year;
+}
+
 bool date::DateCorrect() const {
     return !(day == 0 || month == 0);
 }
@@ -49,7 +64,9 @@ void date::Show() const {
     cout << day << "/" << month << "/" << year << "/";
 }
 
-
+/////////////////////////////////////////////////
+//                  Student                    //
+/////////////////////////////////////////////////
 student::student() {
     surname = "Undefined";
     firstname = "Undefined";
@@ -82,6 +99,17 @@ string student::Get() const {
         + "PhoneNum: " + to_string(phoneNum) + "\n"
         + "Faculty: " + to_string(faculty) + "\n"
         + "Course: " + to_string(course) + "\n\n";
+}
+
+int16_t student::GetFaculty() const {
+    return faculty;
+}
+
+int16_t student::GetCourse() const {
+    return course;
+}
+date student::GetDate() const {
+    return dateOfBirth;
 }
 
 void student::Show() const {

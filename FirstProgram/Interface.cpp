@@ -3,7 +3,7 @@
 //#define numberOfFaculty 7 + 1
 //#define numberOfCourse 5 + 1 
 //#define smallestPhoneNumber   9999999999
-//#define bigestPhoneNumber   100000000000
+//#define biggestPhoneNumber   100000000000
 
 int16_t EnterSettings() {
     int16_t setting = 0;
@@ -13,7 +13,7 @@ int16_t EnterSettings() {
         if (setting == 1 || setting == 2) {
             break;
         }
-        cout << "Invalide input. Try again" << endl;
+        cout << "Invalid input. Try again" << endl;
     }
 
     return setting;
@@ -36,7 +36,7 @@ date GetDayMonthYear(const string& str) {
 
 int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic) {
     int64_t phoneNum = 0;
-    while (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+    while (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
         cout << "Field \"phoneNum\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
             << "You can enter now correct (press 1) or do not initialize it (press 2)";
         if (EnterSettings() == 1) {

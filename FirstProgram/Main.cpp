@@ -18,6 +18,10 @@ int main() {
     int16_t inputSetting = 0;
     int16_t actionSetting = 0;
 
+    //container with students
+    myVector<student> studentsInput;
+    myVector<student> studentsOutput;
+
     cout << "3.1 Task by Mukhametov D.I. 423 group option 1" << endl << endl
          << "Create class student included fields ( surname, first name, patronymic," << endl
          << "date of birth, address, phone, faculty, course.Create an array of objects." << endl << endl
@@ -26,63 +30,50 @@ int main() {
          << "- lists of students for each faculty and course," << endl
          << "- a list of students born after a given year." << endl << endl ;
 
-
     while (true) {
         cout << "How do you want to input information about student (file \"1\" or console \"2\"): ";
         inputSetting = EnterSettings();
 
-        //container with students
-        myVector<student> s;
-
         //input
-        if (inputSetting == inputFromFile) { 
-            s = InputFromFile();
-            cout << "#2.1" << endl;
-            s.Info();
-            for (int i = 0; i < s.GetSize(); ++i) {
-                s[i].Show();
-            }
+        if (inputSetting == inputFromFile) { //for file input
+            studentsInput = InputFromFile();
         }
         else if (inputSetting == inputFromConsole) { //for console input
-            s = InputFromConsole();
-            cout << "#2.2" << endl;
-            s.Info();
-            for (int i = 0; i < s.GetSize(); ++i) {
-                s[i].Show();
-            }
+            studentsInput = InputFromConsole();
         }
         else {
+            cout << "Unexpected behavior" << endl;
             continue;
-        }
-        
-        cout << "#3" << endl;
-        s.Info();
-        for (int i = 0; i < s.GetSize(); ++i) {
-            s[i].Show();
-        }
+        } 
 
-        /*
         cout << "\nWhat do you want to do:" << endl
             << "1.Sort student by faculty" << endl
-            << "2.Show " << endl
-            << "3.Sort student by dateOfBirth" << endl;
+            << "2.Sort by faculty & course" << endl
+            << "3.Sort student by year of birth" << endl;
 
         cin >> actionSetting;
 
-        //output
+        //action
         if (actionSetting == 1) { //Sort by faculty
-            
+            studentsOutput = SortByFaculty(studentsInput);
         }
-        else if (actionSetting == 2) { //Show
-           
+        else if (actionSetting == 2) { //Sort by faculty & course
+            studentsOutput = SortByFacultyCourse(studentsInput);
         }
-        else if (actionSetting == 3) { //Sort by date of birth
-            
+        else if (actionSetting == 3) { //Sort by year of birth
+            studentsOutput = SortByYearOfBirth(studentsInput);
         }
         else {
+            cout << "Unexpected behavior" << endl;
             continue;
         }
-        */
-        //return 0;
+
+        //output
+        for (size_t i = 0; i < studentsOutput.GetSize(); ++i) {
+            studentsOutput[i].Show();
+        }
+
+
     }
+    return 0;
 }

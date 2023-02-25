@@ -6,7 +6,7 @@
 #define numberOfFaculty 7 + 1
 #define numberOfCourse 5 + 1 
 #define smallestPhoneNumber   9999999999
-#define bigestPhoneNumber   100000000000
+#define biggestPhoneNumber   100000000000
 #define maximumOfStudents 10000  //2147483647 максимальное значение, так как это максимум int
 
 enum inputFields {
@@ -44,7 +44,7 @@ template <typename type = student> myVector<type> InputFromFile() {
         cin >> filePath;
         ifstream inputStream(filePath);
         if (!inputStream.is_open()) {
-            cout << "Invalide file path. Try again" << endl;
+            cout << "Invalid file path. Try again" << endl;
             continue;
         }
         else {
@@ -73,7 +73,7 @@ template <typename type = student> myVector<type> InputFromFile() {
                     break;
                 case(phoneNumField):
                     inputStream >> phoneNum;
-                    if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+                    if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
                         phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
                     }
                     break;
@@ -107,12 +107,6 @@ template <typename type = student> myVector<type> InputFromFile() {
         }
     }
 
-    cout << "#1.1" << endl;
-    s.Info();
-    for (int i = 0; i < s.GetSize(); ++i) {
-        s[i].Show();
-    }
-
     return s;
 }
 
@@ -136,7 +130,7 @@ template <typename type = student> myVector<type> InputFromConsole() {
         if (IsInBetween<int>(numberOfStudents, 0, maximumOfStudents)) {
             break;
         }
-        cout << "Invalide value. Try again" << endl;
+        cout << "Invalid value. Try again" << endl;
     }
     
     for (int i = 0; i < numberOfStudents; ++i) {
@@ -161,7 +155,7 @@ template <typename type = student> myVector<type> InputFromConsole() {
 
         cout << "Phone number: ";
         cin >> phoneNum;
-        if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, bigestPhoneNumber)) {
+        if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
             phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
         }
 
@@ -182,11 +176,65 @@ template <typename type = student> myVector<type> InputFromConsole() {
         s.Append(s_);
     }
 
-    cout << "#1.2" << endl;
-    s.Info();
-    for (int i = 0; i < s.GetSize(); ++i) {
-        s[i].Show();
+    return s;
+}
+
+template <typename type = student> myVector<type> SortByFaculty(const myVector<type>& input) {
+    myVector<type> output;
+    int16_t faculty = 0;
+
+    while (true) {
+        cout << "Enter faculty for sorting: ";
+        cin >> faculty;
+        if (IsInBetween<int16_t>(faculty, 0, numberOfFaculty)) {
+            break;
+        }
+        cout << "Invalid value. Try again" << endl;
     }
 
-    return s;
+    for (size_t i = 0; i < input.GetSize(); ++i) {
+        if (input[i].GetFaculty() == faculty) {
+            output.Append(input[i]);
+        }
+    }
+
+    return output;
+}
+
+template <typename type = student> myVector<type> SortByFacultyCourse(const myVector<type>& input) {
+    myVector<type> output;
+
+    for (size_t fIterator = 1; fIterator < numberOfFaculty; ++fIterator){
+        for (size_t cIterator = 1; cIterator < numberOfCourse; ++cIterator) {
+            for (size_t i = 0; i < input.GetSize(); ++i) {
+                if (input[i].GetFaculty() == fIterator && input[i].GetCourse() == cIterator) {
+                    output.Append(input[i]);
+                }
+            }
+        }
+    }
+
+    return output;
+}
+
+template <typename type = student> myVector<type> SortByYearOfBirth(const myVector<type>& input) {
+    myVector<type> output;
+    int16_t year = 0;
+
+    while (true) {
+        cout << "Enter year of birth for sorting: ";
+        cin >> year;
+        if (year > 0) {
+            break;
+        }
+        cout << "Invalid value. Try again" << endl;
+    }
+
+    for (size_t i = 0; i < input.GetSize(); ++i) {
+        if (input[i].GetDate().GetYear() > year) {
+            output.Append(input[i]);
+        }
+    }
+
+    return output;
 }
