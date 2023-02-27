@@ -45,7 +45,7 @@ int main() {
 
             switch (inputSetting) {
             case(inputFromFile): studentsInput = InputFromFile(); break;        //for file input
-            case(inputFromConsole): studentsInput = InputFromConsole(); break;  //for console input                                
+            case(inputFromConsole): studentsInput = InputFromConsole(); break;  //for console input
             default: cout << "Unexpected behavior" << endl; continue;
             }
         }
@@ -70,7 +70,6 @@ int main() {
             studentsOutput[i].Show();
         }
 
-        cout << endl;
         cout << "Do you want to write result of sorting (Yes \"1\" or No \"2\"): ";
         outputSetting = EnterSettingsTwo();
 
@@ -90,9 +89,9 @@ int main() {
 
         //ending
         switch (exitSetting) {
-        case(oldStudent): flagOldStudents = true; break;                                //Sort by faculty
-        case(newStudent): flagOldStudents = false; studentsInput.ClearVector();; break; //Sort by faculty & course
-        case(closeProgram): return 0;                                                   //closeProgram
+        case(oldStudent): flagOldStudents = true; break;                               //Sort by faculty
+        case(newStudent): flagOldStudents = false; studentsInput.ClearVector(); break; //Sort by faculty & course
+        case(closeProgram): return 0;                                                  //closeProgram
         default: cout << "Unexpected behavior" << endl; continue;
         }
     } 

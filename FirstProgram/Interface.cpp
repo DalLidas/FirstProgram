@@ -73,8 +73,8 @@ date GetDayMonthYear(const string& str) {
 int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic) {
     int64_t phoneNum = 0;
     while (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
-        cout << "Field \"phoneNum\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        cout << endl << "Field \"phoneNum\" by " << surname << " " << firstname << " " << patronymic << " is incorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Phone number: ";
             cin >> phoneNum;
@@ -89,8 +89,8 @@ int64_t CorrectPhoneNum(const string& surname, const string& firstname, const st
 int16_t CorrectFaculty(const string& surname, const string& firstname, const string& patronymic){
     int16_t faculty = 0;
     while (!IsInBetween<int16_t>(faculty, 0, numberOfFaculty)) {
-        cout << "Field \"faculty\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        cout << endl << "Field \"faculty\" by " << surname << " " << firstname << " " << patronymic << " is incorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Faculty: ";
             cin >> faculty;
@@ -105,8 +105,8 @@ int16_t CorrectFaculty(const string& surname, const string& firstname, const str
 int16_t CorrectCourse(const string& surname, const string& firstname, const string& patronymic) {
     int16_t course = 0;
     while (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
-        cout << "Field \"course\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        cout << endl << "Field \"course\" by " << surname << " " << firstname << " " << patronymic << " is incorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Faculty: ";
             cin >> course;
@@ -122,8 +122,8 @@ date CorrectDateOfBirth(const string& surname, const string& firstname, const st
     date dateOfBirth;
     string dateOfBirth_;
     while (!dateOfBirth.DateCorrect()) {
-        cout << "Field \"dateOfBirth\" by " << surname << " " << firstname << " " << patronymic << " is uncorrect." << endl
-            << "You can enter now correct (press 1) or do not initialize it (press 2)";
+        cout << endl << "Field \"dateOfBirth\" by " << surname << " " << firstname << " " << patronymic << " is incorrect." << endl
+            << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Date of birth: ";
             cin >> dateOfBirth_;
