@@ -16,17 +16,12 @@ int EnterSettingsTwo() {
 
         while (!(cin >> setting))
         {
-            if (cin.eof())
-            {
-                throw "eof";
-            }
             cin.clear();
-            cin.ignore(1000, '\n'); 
+            cin.ignore(INT32_MAX, '\n');
             cout << "Invalid input. Try again" << endl
                 << "Enter \"1\" or \"2\": ";
         }
     }
-
     return setting;
 }
 
@@ -41,33 +36,45 @@ int EnterSettingThree() {
 
         while (!(cin >> setting))
         {
-            if (cin.eof())
-            {
-                throw "eof";
-            }
             cin.clear();
-            cin.ignore(1000, '\n');
+            cin.ignore(INT32_MAX, '\n');
             cout << "Invalid input. Try again" << endl
                 << "Enter \"1\" or \"2\" or \"3\": ";
         }
     }
-
     return setting;
 }
 
-date GetDayMonthYear(const string& str) {
+date EnterDayMonthYear(const string& str) {
     cmatch result;
-    const regex regular( "([0-9]{1,2})" //day
-                        "([\\s-_\./])"
-                        "([0-9]{2})"   //month
-                        "([\\s-_\./])"
-                        "([0-9]{4})"); //year
-    if (regex_match(str.c_str(),result, regular)) {
+    static const regex reg( "([0-9]{1,2})" //day
+                     "([\\s-_./])"
+                     "([0-9]{1,2})"   //month
+                     "([\\s-_./])"
+                     "([0-9]{1,4})"); //year
+    if (regex_match(str.c_str(),result, reg)) {
         return date(static_cast<int16_t>(stoi(result[1])), 
                     static_cast<int16_t>(stoi(result[3])),
                     static_cast<int16_t>(stoi(result[5])));
     }
     return date();
+}
+
+string EnterFilePath() {
+    string filePath = " ";
+    static const regex reg("((/./)?(con))|((/./)?(con\\.))|((/./)?(con\\.)(.*))");
+
+    while (true) {
+        cout << "Enter file path: ";
+        cin >> filePath;
+
+        if (!regex_match(filePath.c_str(), reg)) {
+            break;
+        }
+        cout << "You enter reserved by system file name. Try again" << endl;
+    }
+
+    return filePath.c_str();
 }
 
 int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic) {
@@ -77,7 +84,7 @@ int64_t CorrectPhoneNum(const string& surname, const string& firstname, const st
             << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Phone number: ";
-            cin >> phoneNum;
+            phoneNum = EnterNum<int64_t>();;
         }
         else {
             return 0;
@@ -93,7 +100,7 @@ int16_t CorrectFaculty(const string& surname, const string& firstname, const str
             << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Faculty: ";
-            cin >> faculty;
+            faculty = EnterNum<int16_t>();
         }
         else {
             return 0;
@@ -109,7 +116,7 @@ int16_t CorrectCourse(const string& surname, const string& firstname, const stri
             << "You can enter now correct (press 1) or do not initialize it (press 2): ";
         if (EnterSettingsTwo() == 1) {
             cout << "Faculty: ";
-            cin >> course;
+            course = EnterNum<int16_t>();
         }
         else {
             return 0;
@@ -127,7 +134,7 @@ date CorrectDateOfBirth(const string& surname, const string& firstname, const st
         if (EnterSettingsTwo() == 1) {
             cout << "Date of birth: ";
             cin >> dateOfBirth_;
-            dateOfBirth = GetDayMonthYear(dateOfBirth_);
+            dateOfBirth = EnterDayMonthYear(dateOfBirth_);
         }
         else {
             return dateOfBirth;

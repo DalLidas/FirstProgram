@@ -13,9 +13,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Algorithms.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Classes.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>

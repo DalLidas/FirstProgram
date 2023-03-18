@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/////////////////////////////////////////////////
+//                    Date                     //
+/////////////////////////////////////////////////
 class date {
 private:
     bool leapYear;
@@ -27,8 +30,13 @@ public:
 
     bool DateCorrect() const;
     void Show() const;
+
+    bool operator ==(const date& other) const;
 };
 
+/////////////////////////////////////////////////
+//                  Student                    //
+/////////////////////////////////////////////////
 class student {
 private:
     string surname;
@@ -43,18 +51,36 @@ private:
 public:
 
     student();
+
     void Set(const string& surname_, const string& firstname_, const string& patronymic_, const date& dateOfBirth_,
         const string& address_, const int64_t& phoneNum_, const int16_t& faculty_, const int16_t& course_);
+    void SetSurname(const string& surname_);
+    void SetFirstname(const string& firstname_);
+    void SetPatronymic(const string& patronymic_);
+    void GetDate(const date& dateOfBirth_);
+    void SetAddress(const string& address_);
+    void SetPhoneNum(const int64_t& phoneNum_);
+    void SetFaculty(const int16_t& faculty_);
+    void SetCourse(const int16_t& course_);
+    
     string Get() const;
-
-    int16_t GetFaculty() const; //for sort
-    int16_t GetCourse() const;  //for sort
-    date GetDate() const;       //for sort
+    string GetSurname() const;
+    string GetFirstname() const;
+    string GetPatronymic() const;
+    date GetDate() const;      
+    string GetAddress() const;
+    int64_t GetPhoneNum() const;
+    int16_t GetFaculty() const; 
+    int16_t GetCourse() const;  
 
     void Show() const;
+
+    bool operator ==(const student& other ) const;
 };
 
-
+/////////////////////////////////////////////////
+//                  Vector                     //
+/////////////////////////////////////////////////
 template <typename type = int> class myVector {
 private:
     type* ptr = nullptr;
@@ -79,7 +105,7 @@ private:
     }
 public:
     myVector() : currentSize(0), capacity(2), ptr(new type[2]) {}
-    myVector(const size_t& size) : currentSize(size), capacity(size > 1 ? size : 2 ), ptr(new type[size > 1 ? size : 2]) {}
+    myVector(const size_t& size) : currentSize(0), capacity(size > 1 ? size : 2 ), ptr(new type[size > 1 ? size : 2]) {}
 
     ~myVector() {
         if (ptr != nullptr) {
@@ -96,7 +122,7 @@ public:
         ptr[currentSize++] = object;
     }
 
-    int GetSize() const {
+    size_t GetSize() const {
         return currentSize;
     }
 
@@ -130,5 +156,18 @@ public:
             }
         }
         return *this;
+    }
+
+    bool operator == (const myVector<type>& other) const{
+        if (currentSize != other.currentSize) {
+            return false;
+        }
+        for (size_t i = 0; i < currentSize; ++i) {
+            if (!(ptr[i] == other.ptr[i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 };

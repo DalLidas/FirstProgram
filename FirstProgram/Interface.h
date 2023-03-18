@@ -18,8 +18,19 @@ using namespace std;
 
 int EnterSettingsTwo();
 int EnterSettingThree();
+date EnterDayMonthYear(const string& str);
+string EnterFilePath();
+template <typename type> type EnterNum() {
+    type num = 0;
 
-date GetDayMonthYear(const string& str);
+    while (!(cin >> num)) {
+        cin.clear();
+        cin.ignore(INT32_MAX, '\n');
+        cout << "Invalid input. Try again" << endl << "> ";
+    }
+
+    return num;
+}
 
 date CorrectDateOfBirth(const string& surname, const string& firstname, const string& patronymic);
 int64_t CorrectPhoneNum(const string& surname, const string& firstname, const string& patronymic);
@@ -40,12 +51,11 @@ template <typename type = student> myVector<type> InputFromFile() {
     myVector <student> s;
 
     while (true) {
-        cout << "Enter file path: ";
         string filePath = " ";
-        cin >> filePath;
-        ifstream inputStream(filePath);
+        filePath = EnterFilePath();
+        ifstream inputStream(filePath.c_str());
         if (!inputStream.is_open()) {
-            cout << "Invalid file path. Try again" << endl;
+            cout << "File with this name don't exist. Try again" << endl;
             continue;
         }
         else {
@@ -64,7 +74,7 @@ template <typename type = student> myVector<type> InputFromFile() {
                     break;
                 case(dateOfBirthField):
                     inputStream >> dateOfBirth_;
-                    dateOfBirth = GetDayMonthYear(dateOfBirth_);
+                    dateOfBirth = EnterDayMonthYear(dateOfBirth_);
                     if(!dateOfBirth.DateCorrect()) {
                         dateOfBirth = CorrectDateOfBirth(surname, firstname, patronymic);
                     }
@@ -127,7 +137,7 @@ template <typename type = student> myVector<type> InputFromConsole() {
    
     while (true) {
         cout << "Enter number of students: ";
-        cin >> numberOfStudents;
+        numberOfStudents = EnterNum<int>();
         if (IsInBetween<int>(numberOfStudents, 0, maximumOfStudents)) {
             break;
         }
@@ -146,7 +156,7 @@ template <typename type = student> myVector<type> InputFromConsole() {
         
         cout << "Date of birth: ";
         cin >> dateOfBirth_;
-        dateOfBirth = GetDayMonthYear(dateOfBirth_);
+        dateOfBirth = EnterDayMonthYear(dateOfBirth_);
         if (!dateOfBirth.DateCorrect()) {
             dateOfBirth = CorrectDateOfBirth(surname, firstname, patronymic);
         }
@@ -180,13 +190,24 @@ template <typename type = student> myVector<type> InputFromConsole() {
     return s;
 }
 
+template <typename type = student> myVector<type> SortByFacultyInner(const myVector<type>& input, int16_t faculty) {
+    myVector<type> output;
+
+    for (size_t i = 0; i < input.GetSize(); ++i) {
+        if (input[i].GetFaculty() == faculty) {
+            output.Append(input[i]);
+        }
+    }
+
+    return output;
+}
 template <typename type = student> myVector<type> SortByFaculty(const myVector<type>& input) {
     myVector<type> output;
     int16_t faculty = 0;
 
     while (true) {
         cout << "Enter faculty for sorting: ";
-        cin >> faculty;
+        faculty = EnterNum<int16_t>();
         if (IsInBetween<int16_t>(faculty, 0, numberOfFaculty)) {
             break;
         }
@@ -199,7 +220,7 @@ template <typename type = student> myVector<type> SortByFaculty(const myVector<t
         }
     }
 
-    return output;
+    return SortByFacultyInner(input, faculty);
 }
 
 template <typename type = student> myVector<type> SortByFacultyCourse(const myVector<type>& input) {
@@ -218,18 +239,8 @@ template <typename type = student> myVector<type> SortByFacultyCourse(const myVe
     return output;
 }
 
-template <typename type = student> myVector<type> SortByYearOfBirth(const myVector<type>& input) {
+template <typename type = student> myVector<type> SortByYearOfBirthInner(const myVector<type>& input, int16_t year) {
     myVector<type> output;
-    int16_t year = 0;
-
-    while (true) {
-        cout << "Enter year of birth for sorting: ";
-        cin >> year;
-        if (year > 0) {
-            break;
-        }
-        cout << "Invalid value. Try again" << endl;
-    }
 
     for (size_t i = 0; i < input.GetSize(); ++i) {
         if (input[i].GetDate().GetYear() > year) {
@@ -239,18 +250,40 @@ template <typename type = student> myVector<type> SortByYearOfBirth(const myVect
 
     return output;
 }
+template <typename type = student> myVector<type> SortByYearOfBirth(const myVector<type>& input) {
+    int16_t year = 0;
+
+    while (true) {
+        cout << "Enter year of birth for sorting: ";
+        year = EnterNum<int16_t>();
+        if (year > 0) {
+            break;
+        }
+        cout << "Invalid value. Try again" << endl;
+    }
+
+    return SortByYearOfBirthInner(input, year);
+}
 
 template <typename type = student> void WriteOutput(const myVector<type>& input) {
     while (true) {
-        cout << "Enter file path: ";
         string filePath = " ";
-        cin >> filePath;
-        ofstream outputStream(filePath);
-        if (!outputStream.is_open()) {
-            cout << "Invalid file path. Try again" << endl;
+        filePath = EnterFilePath();
+
+        ifstream test(filePath.c_str());
+        if (test.is_open()) {
+            cout << "File already exist. You still want a write on it? (Yes \"1\" or No \"2\"): ";
+            if (EnterSettingsTwo() == 2) {
+                continue;
+            }
+        }
+
+        ofstream outputStream(filePath.c_str());
+        if (!outputStream.is_open()) { 
+            cout << "File with this name don't exist. Try again" << endl;
             continue;
         }
-        else {
+        else{
             for (size_t i = 0; i < input.GetSize(); ++i) {
                 outputStream << input[i].Get() << endl;
             }

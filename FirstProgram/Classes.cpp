@@ -8,7 +8,7 @@ bool date::Leap(int y) const {
 }
 
 bool date::DateCorrect(const int16_t& day_, const int16_t& month_, const int16_t& year_) {
-    int days[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+    int days[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
     leapYear = Leap(year_);
     if (leapYear) {
         days[1] = 29;
@@ -64,6 +64,12 @@ void date::Show() const {
     cout << day << "/" << month << "/" << year << "/";
 }
 
+bool date::operator ==(const date& other) const{
+    return day == other.day &&
+        month == other.month &&
+        year == other.year;
+}
+
 /////////////////////////////////////////////////
 //                  Student                    //
 /////////////////////////////////////////////////
@@ -89,28 +95,67 @@ void student::Set(const string& surname_, const string& firstname_, const string
     faculty = faculty_;
     course = course_;
 }
+void student::SetSurname(const string& surname_) {
+    surname = surname_;
+}
+void student::SetFirstname(const string& firstname_) {
+    firstname = firstname_;
+}
+void student::SetPatronymic(const string& patronymic_) {
+    patronymic = patronymic_;
+}
+void student::GetDate(const date& dateOfBirth_) {
+    dateOfBirth = dateOfBirth_;
+}
+void student::SetAddress(const string& address_) {
+    address = address_;
+}
+void student::SetPhoneNum(const int64_t& phoneNum_) {
+    phoneNum = phoneNum_;
+}
+void student::SetFaculty(const int16_t& faculty_) {
+    faculty = faculty_;
+}
+void student::SetCourse(const int16_t& course_) {
+    course = course_;
+}
 
 string student::Get() const {
-    return "Surname: " + surname + "\n"
-        + "Firstname: " + firstname + "\n"
-        + "Patronymic: " + patronymic + "\n"
-        + "DateOfBirth: " + dateOfBirth.Get() + "\n"
-        + "Address: " + address + "\n"
-        + "PhoneNum: " + to_string(phoneNum) + "\n"
-        + "Faculty: " + to_string(faculty) + "\n"
-        + "Course: " + to_string(course) + "\n";
+    return surname + "\n"
+        + firstname + "\n"
+        + patronymic + "\n"
+        + dateOfBirth.Get() + "\n"
+        + address + "\n"
+        + to_string(phoneNum) + "\n"
+        + to_string(faculty) + "\n"
+        + to_string(course) + "\n\n";
 }
 
-int16_t student::GetFaculty() const {
-    return faculty;
+string student::GetSurname() const {
+    return surname;
 }
-
-int16_t student::GetCourse() const {
-    return course;
+string student::GetFirstname() const {
+    return firstname;
+}
+string student::GetPatronymic() const {
+    return patronymic;
 }
 date student::GetDate() const {
     return dateOfBirth;
 }
+string student::GetAddress() const {
+    return address;
+}
+int64_t student::GetPhoneNum() const {
+    return phoneNum;
+}
+int16_t student::GetFaculty() const {
+    return faculty;
+}
+int16_t student::GetCourse() const {
+    return course;
+}
+
 
 void student::Show() const {
     cout << "Surname: " << surname << endl
@@ -123,5 +168,14 @@ void student::Show() const {
         << "Course: " << course << endl << endl;
 }
 
-
+bool student::operator ==(const student& other) const{
+    return surname == other.surname &&
+        firstname == other.firstname &&
+        patronymic == other.patronymic &&
+        dateOfBirth == other.dateOfBirth &&
+        address == other.address &&
+        phoneNum == other.phoneNum &&
+        faculty == other.faculty &&
+        course == other.course;
+}
 
