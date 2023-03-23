@@ -35,7 +35,7 @@ int main() {
     //Checking for errors
     flagErrorExist = ErrorHandler();
     if (flagErrorExist) {
-        cout << "Do you still want are run the program? (Yes \"1\" or No \"2\")" << endl;
+        cout << "Do you still want are run the program? (Yes \"1\" or No \"2\"): ";
         if (EnterSettingsTwo() == 2) {
             return 0;
         }
@@ -44,6 +44,7 @@ int main() {
         cout << "Program passed all test. All sorting function work correct" << endl << endl;
     }
 
+    cout << endl;
     cout << "3.1 Task by Mukhametov D.I. 423 group option 1" << endl << endl
          << "Create class student included fields ( surname, first name, patronymic," << endl
          << "date of birth, address, phone, faculty, course.Create an array of objects." << endl << endl
@@ -76,6 +77,11 @@ int main() {
                 }
                 flagWriteStudents = false;
             }
+        }
+
+        if (studentsInput.GetSize() == 0) {
+            cout << "Invalid data. Try again" << endl << endl;
+            continue;
         }
 
         cout << endl;

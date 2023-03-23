@@ -254,7 +254,7 @@ template <typename type = student> myVector<type> SortByYearOfBirth(const myVect
     int16_t year = 0;
 
     while (true) {
-        cout << "Enter year of birth for sorting: ";
+        cout << endl << "Enter year of birth for sorting: ";
         year = EnterNum<int16_t>();
         if (year > 0) {
             break;
