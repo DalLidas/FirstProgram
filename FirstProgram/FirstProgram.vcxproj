@@ -134,6 +134,8 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Classes.cpp" />
     <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Input.txt" />

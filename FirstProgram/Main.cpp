@@ -1,6 +1,7 @@
 #include "Classes.h"
 #include "Algorithms.h"
 #include "Interface.h"
+#include "Test.h"
 
 enum inputSettings { inputFromFile = 1, inputFromConsole = 2 };
 enum actionSettings { sortByFaculty = 1, sortByFacultyCourse = 2, sortByYearOfBirth = 3};
@@ -16,53 +17,32 @@ using std::cout;
 using std::cin;
 
 int main() {
-
-    //{
-    //    myVector<student> sIn;
-    //    myVector<student> sOut;
-    //    student bob;
-    //    date dt;
-    //    dt.Set(12, 12, 1212);
-    //    bob.Set("Bob1", "Bob", "Boba", dt, "Brazil", 88005553535, 4, 1);
-    //    sIn.Append(bob);
-    //    sOut.Append(bob);
-    //    dt.Set(12, 12, 1200);
-    //    bob.Set("Bob2", "Bob", "Booba", dt, "Brazil", 88005553535, 3, 1);
-    //    sIn.Append(bob);
-    //    //sOut.Append(bob);
-    //    bob.Set("Bob3", "Bob", "Boba", dt, "Brazil", 88005553535, 2, 1);
-    //    sIn.Append(bob);
-    //    //sOut.Append(bob);
-    //    dt.Set(12, 12, 1270);
-    //    bob.Set("Bob4", "Bob", "Boba", dt, "Brazil", 88005553535, 4, 1);
-    //    sIn.Append(bob);
-    //    sOut.Append(bob);
-    //    bob.Set("Bob5", "Bob", "Boba", dt, "Brazil", 88005553535, 2, 1);
-    //    sIn.Append(bob);
-    //    //sOut.Append(bob);
-    //    dt.Set(12, 12, 1240);
-    //    bob.Set("Bob6", "Bob", "Boba", dt, "Brazil", 88005553535, 1, 1);
-    //    sIn.Append(bob);
-    //    //sOut.Append(bob);
-    //    bob.Set("Bob7", "Bob", "Boba", dt, "Brazil", 88005553535, 2, 1);
-    //    sIn.Append(bob);
-    //    //sOut.Append(bob);
-    //    SortByFacultyInner(sIn, 4) == sOut ? cout << "true" << endl : cout << "false" << endl;
-    //}
-
     //settings
     int inputSetting = 0;
     int actionSetting = 0;
     int outputSetting = 0;
     int exitSetting = 0;
 
-    //flag
+    //flags
+    bool flagErrorExist = false;
     bool flagInputNewStudents = true;
     bool flagWriteStudents = false;
 
     //containers with students
     myVector<student> studentsInput;
     myVector<student> studentsOutput;
+
+    //Checking for errors
+    flagErrorExist = ErrorHandler();
+    if (flagErrorExist) {
+        cout << "Do you still want are run the program? (Yes \"1\" or No \"2\")" << endl;
+        if (EnterSettingsTwo() == 2) {
+            return 0;
+        }
+    }
+    else {
+        cout << "Program passed all test. All sorting function work correct" << endl << endl;
+    }
 
     cout << "3.1 Task by Mukhametov D.I. 423 group option 1" << endl << endl
          << "Create class student included fields ( surname, first name, patronymic," << endl
@@ -75,7 +55,7 @@ int main() {
     while (true) {
         //input
         if (flagInputNewStudents) {
-            cout << "How do you want to input information about student (file \"1\" or console \"2\"): ";
+            cout << "How do you want to input information about student (File \"1\" or Console \"2\"): ";
             inputSetting = EnterSettingsTwo();
 
             switch (inputSetting) {
