@@ -48,6 +48,8 @@ template <typename type = student> myVector<type> InputFromFile() {
     int16_t faculty;
     int16_t course;
 
+    string trash; 
+
     myVector <student> s;
 
     while (true) {
@@ -83,20 +85,37 @@ template <typename type = student> myVector<type> InputFromFile() {
                     inputStream >> address;
                     break;
                 case(phoneNumField):
-                    inputStream >> phoneNum;
-                    if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
+                    if(inputStream >> phoneNum){
+                        if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
+                            phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
+                        }
+                    }else {
+                        inputStream.clear();
+                        inputStream >> trash;
                         phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
                     }
                     break;
                 case(facultyField):
-                    inputStream >> faculty;
-                    if (!IsInBetween<int64_t>(faculty, 0, numberOfFaculty)) {
+                    if (inputStream >> faculty) {
+                        if (!IsInBetween<int64_t>(faculty, 0, numberOfFaculty)) {
+                            faculty = CorrectFaculty(surname, firstname, patronymic);
+                        }
+                    }
+                    else {
+                        inputStream.clear();
+                        inputStream >> trash;
                         faculty = CorrectFaculty(surname, firstname, patronymic);
                     }
                     break;
-                case(courseField):
-                    inputStream >> course;
-                    if (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+                case(courseField):          
+                    if (inputStream >> course) {
+                        if (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+                            course = CorrectCourse(surname, firstname, patronymic);
+                        }
+                    }
+                    else {
+                        inputStream.clear();
+                        inputStream >> trash;
                         course = CorrectCourse(surname, firstname, patronymic);
                     }
                     break;
@@ -128,9 +147,11 @@ template <typename type = student> myVector<type> InputFromConsole() {
     string dateOfBirth_;
     date dateOfBirth;
     string address;
-    int64_t phoneNum;
-    int16_t faculty;
-    int16_t course;
+    int64_t phoneNum = 0;
+    int16_t faculty = 0;
+    int16_t course = 0;
+
+    string trash;
 
     int numberOfStudents = 0;
     myVector <student> s;
@@ -165,20 +186,38 @@ template <typename type = student> myVector<type> InputFromConsole() {
         cin >> address;
 
         cout << "Phone number: ";
-        cin >> phoneNum;
-        if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
+        if (cin >> phoneNum) {
+            if (!IsInBetween<int64_t>(phoneNum, smallestPhoneNumber, biggestPhoneNumber)) {
+                phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
+            }
+        }
+        else {
+            cin.clear();
+            cin >> trash;
             phoneNum = CorrectPhoneNum(surname, firstname, patronymic);
         }
 
         cout << "Faculty: ";
-        cin >> faculty;
-        if (!IsInBetween<int64_t>(faculty, 0, numberOfFaculty)) {
+        if (cin >> faculty) {
+            if (!IsInBetween<int64_t>(faculty, 0, numberOfFaculty)) {
+                faculty = CorrectFaculty(surname, firstname, patronymic);
+            }
+        }
+        else {
+            cin.clear();
+            cin >> trash;
             faculty = CorrectFaculty(surname, firstname, patronymic);
         }
 
         cout << "Course: ";
-        cin >> course;
-        if (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+        if (cin >> course) {
+            if (!IsInBetween<int16_t>(course, 0, numberOfCourse)) {
+                course = CorrectCourse(surname, firstname, patronymic);
+            }
+        }
+        else {
+            cin.clear();
+            cin >> trash;
             course = CorrectCourse(surname, firstname, patronymic);
         }
 
@@ -212,12 +251,6 @@ template <typename type = student> myVector<type> SortByFaculty(const myVector<t
             break;
         }
         cout << "Invalid value. Try again" << endl;
-    }
-
-    for (size_t i = 0; i < input.GetSize(); ++i) {
-        if (input[i].GetFaculty() == faculty) {
-            output.Append(input[i]);
-        }
     }
 
     return SortByFacultyInner(input, faculty);
@@ -277,6 +310,7 @@ template <typename type = student> void WriteOutput(const myVector<type>& input)
                 continue;
             }
         }
+        test.close();
 
         ofstream outputStream(filePath.c_str());
         if (!outputStream.is_open()) { 
@@ -289,5 +323,6 @@ template <typename type = student> void WriteOutput(const myVector<type>& input)
             }
             break;
         }
+        outputStream.close();
     }
 }

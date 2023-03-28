@@ -90,7 +90,7 @@ bool Test2() {
     dt.Set(12, 12, 1212);
     bob.Set("Bob1", "Bob", "Boba", dt, "Brazil", 88005553535, 4, 1);
     sIn.Append(bob);
-    sOut.Append(bob);
+    //sOut.Append(bob);
 
     dt.Set(12, 12, 1200);
     bob.Set("Bob2", "Bob", "Booba", dt, "Brazil", 88005553535, 3, 1);

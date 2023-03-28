@@ -34,6 +34,7 @@ public:
     bool operator ==(const date& other) const;
 };
 
+
 /////////////////////////////////////////////////
 //                  Student                    //
 /////////////////////////////////////////////////
@@ -167,7 +168,7 @@ public:
                 return false;
             }
         }
-
+                        
         return true;
     }
 };
